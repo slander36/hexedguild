@@ -8,9 +8,11 @@ set :application, "hexedguild"
 set :scm, :git
 set :repository,  "git@github.com:slander36/hexedguild.git"
 set :branch, "master"
+set :scm_password, "turket"
 
 # Login details
 set :user, "sl36"
+set :password, "turket81432"
 set :use_sudo, false
 
 # Server login details
