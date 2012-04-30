@@ -1,3 +1,6 @@
+# Tell Capistrano to ping remote connection for password info
+ssh_options[:forward_agent] = true
+
 # Application Name
 set :application, "hexedguild"
 
