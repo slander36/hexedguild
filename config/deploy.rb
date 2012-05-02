@@ -1,6 +1,12 @@
 # Tell Capistrano to ping remote connection for password info
 ssh_options[:forward_agent] = true
 
+# Set up multi-stage
+require 'capistrano/ext/multistage'
+
+set :stages, ["staging", "production"]
+set :default_stage, "staging"
+
 # Application Name
 set :application, "hexedguild"
 
@@ -43,8 +49,8 @@ before 'deploy', 'rvm:install_rvm'
 ### End Capistrano/RVM Gem ###
 
 namespace :deploy do
-#  task :start {}
-#  task :stop {}
+# task :start {}
+# task :stop {}
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
