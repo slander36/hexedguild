@@ -6,8 +6,10 @@ gem 'rails', '3.2.3'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'pg'
 
-# gem 'json'
+gem 'json'
+gem 'multi_json'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,6 +25,12 @@ end
 
 gem 'jquery-rails'
 
+group :development do
+	# Include capistrano for rvm deploy
+	gem 'capistrano'
+	gem 'rvm-capistrano'
+end
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -31,9 +39,6 @@ gem 'jquery-rails'
 
 # Use unicorn as the app server
 # gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug'

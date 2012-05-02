@@ -4,23 +4,28 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  encoing: unicode
+  database: hexedguild_development
   pool: 5
-  timeout: 5000
+  username: hexedguild
+  password: hexedguild_pass
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  adapter: sqlite3
-  database: db/test.sqlite3
+  adapter: postgresql
+  encoing: unicode
+  database: hexedguild_test
   pool: 5
-  timeout: 5000
+  username: hexedguild
+  password: hexedguild_pass
 
 production:
-  adapter: mysql
+  adapter: postgresql
+  encoing: unicode
   database: hexedguild_production
-  host: localhost
+  pool: 5
   username: hexedguild
-	password: hexedguild_password
+  password: hexedguild_pass
