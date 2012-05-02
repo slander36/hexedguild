@@ -28,6 +28,7 @@ set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules"]
 ### Using Capistrano/RVM Gem ###
 
 require "rvm/capistrano"
+require "bundler/capistrano"
 
 # set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"") # Read from local system
 set :rvm_ruby_string, '1.9.3@hexedguild'
@@ -48,3 +49,4 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
+
