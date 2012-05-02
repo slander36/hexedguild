@@ -26,10 +26,10 @@ set :deploy_via, :remote_cache
 set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules"]
 
 ### Using Capistrano/RVM Gem ###
-#
-# require "rvm/capistrano"
 
- set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"") # Read from local system
+require "rvm/capistrano"
+
+# set :rvm_ruby_string, ENV['GEM_HOME'].gsub(/.*\//,"") # Read from local system
 set :rvm_ruby_string, '1.9.3@hexedguild'
 
 # Tell Capistrano to install rvm, ruby, etc on deploy:setup
