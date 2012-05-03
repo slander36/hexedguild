@@ -17,6 +17,9 @@ Hexedguild::Application.routes.draw do
 	match "/signin", to: "sessions#new"
 	match "/signout", to: "sessions#destroy", via: :delete
 
+	# User Navigation
+	match "/!:character", to: "users#show", as: "character_page"
+
 # The priority is based upon order of creation:
   # first created -> highest priority.
 

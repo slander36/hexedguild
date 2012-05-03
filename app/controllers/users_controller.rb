@@ -16,6 +16,11 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		@user = User.find(params[:id])
+		if params[:id]
+			@user = User.find(params[:id])
+		end
+		if params[:character]
+			@user = User.find_by_character(params[:character])
+		end
 	end
 end
