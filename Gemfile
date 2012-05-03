@@ -30,6 +30,8 @@ end
 group :development do
 	# RSpec for testing
 	gem 'rspec-rails', '2.9.0'
+	# Guard for automated testing
+	gem 'guard-rspec', '0.5.5'
 	# Include capistrano for rvm deploy
 	gem 'capistrano'
 	gem 'rvm-capistrano'
@@ -38,7 +40,12 @@ group :development do
 end
 
 group :test do
+	gem 'rspec-rails', '2.9.0'
 	gem 'capybara', '1.1.2'
+	gem 'rb-inotify', '0.8.8'
+	gem 'libnotify', '0.5.9'
+	gem 'guard-spork', '0.3.2'
+	gem 'spork', '0.9.0'
 end
 
 # To use ActiveModel has_secure_password
