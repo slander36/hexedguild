@@ -7,6 +7,10 @@ Hexedguild::Application.routes.draw do
 	match "/contact", to: "static_pages#contact"
 	match "/about", to: "static_pages#about"
 
+	# WoW and TERA
+	match "/wow", to: "static_pages#wow"
+	match "/tera", to: "static_pages#tera"
+
 # The priority is based upon order of creation:
   # first created -> highest priority.
 
