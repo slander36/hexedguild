@@ -1,5 +1,5 @@
 Hexedguild::Application.routes.draw do
-	# require Users # later on
+	resources :users
 
 	root to: 'static_pages#home'
 
@@ -10,6 +10,9 @@ Hexedguild::Application.routes.draw do
 	# WoW and TERA
 	match "/wow", to: "static_pages#wow"
 	match "/tera", to: "static_pages#tera"
+
+	# User Application/Signin
+	match "/apply", to: "users#new"
 
 # The priority is based upon order of creation:
   # first created -> highest priority.
