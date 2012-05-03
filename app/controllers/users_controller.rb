@@ -22,5 +22,9 @@ class UsersController < ApplicationController
 		if params[:character]
 			@user = User.find_by_character(params[:character])
 		end
+
+		if @user.nil?
+			redirect_to root_path
+		end
 	end
 end
