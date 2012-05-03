@@ -1,5 +1,6 @@
 Hexedguild::Application.routes.draw do
 	resources :users
+	resources :sessions, only: [:new, :create, :destroy]
 
 	root to: 'static_pages#home'
 
@@ -11,8 +12,10 @@ Hexedguild::Application.routes.draw do
 	match "/wow", to: "static_pages#wow"
 	match "/tera", to: "static_pages#tera"
 
-	# User Application/Signin
+	# User Application
 	match "/apply", to: "users#new"
+	match "/signin", to: "sessions#new"
+	match "/signout", to: "sessions#destroy", via: :delete
 
 # The priority is based upon order of creation:
   # first created -> highest priority.

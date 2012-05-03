@@ -1,14 +1,23 @@
 <header class='navbar navbar-fixed-top'>
 	<div class='navbar-inner'>
 		<div class='container'>
-			<%= link_to "Hexed", "#", id: "logo" %>
+			<%= link_to "Hexed", root_path, id: "logo" %>
 			<nav>
 				<ul class="nav pull-right">
 					<li><%= link_to "Home", root_path %></li>
 					<li><%= link_to "WoW", wow_path %></li>
 					<li><%= link_to "TERA", tera_path %></li>
 					<li><%= link_to "Forum", "#" %></li>
-					<li><%= link_to "Sign In", "#" %></li>
+					<% if signed_in? %>
+						<li><%= link_to "Profile", current_user %></li>
+						<li><%= link_to "Settings", "#" %></li>
+						<li class='divider'></li>
+						<li>
+							<%= link_to "Sign Out", signout_path, method: "delete" %>
+						</li>
+					<% else %>
+						<li><%= link_to "Sign In", signin_path %></li>
+					<% end %>
 				</ul>
 			</nav>
 		</div>
