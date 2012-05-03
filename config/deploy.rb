@@ -37,6 +37,8 @@ set :git_enable_submodules, 1
 # Excludes on deploy
 set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules"]
 
+before "deploy:symlink", "assets:precompile"
+
 namespace :deploy do
 	task :start, :roles => :app do
 		run "touch #{current_path}/tmp/restart.txt"
@@ -48,6 +50,13 @@ namespace :deploy do
 	desc "Restart Application"
 	task :restart, :roles => :app do
 		run "touch #{current_path}/tmp/restart.txt"
+	end
+end
+
+namespace :assets do
+	desc "Compile assets"
+	task :precompile, :roles => :app do
+		run "cd #{release_path} && bundle exec rake RAILS_ENV=#{rails_env} assets:precompile"
 	end
 end
 
