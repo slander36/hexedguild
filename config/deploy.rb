@@ -22,11 +22,11 @@ set :password, "hexedguild_pass"
 set :use_sudo, false
 
 # Server login details
-server "67.207.142.196", :app, :web, :db, :primary => true
+# server "67.207.142.196", :app, :web, :db, :primary => true
 
 # App path
-set :deploy_to, "/var/www/apps/hexedguild/"
-set :deploy_via, :remote_cache
+# set :deploy_to, "/var/www/apps/hexedguild/"
+# set :deploy_via, :remote_cache
 
 # Excludes on deploy
 set :copy_exclude, [".git", ".DS_Store", ".gitignore", ".gitmodules"]
@@ -40,11 +40,11 @@ require "bundler/capistrano"
 set :rvm_ruby_string, '1.9.3@hexedguild'
 
 # Tell Capistrano to install rvm, ruby, etc on deploy:setup
-before 'deploy:setup', 'rvm:install_rvm'
-before 'deploy:setup', 'rvm:install_ruby'
+# before 'deploy:setup', 'rvm:install_rvm'
+# before 'deploy:setup', 'rvm:install_ruby'
 
 # Tell Capistrano to update rvm on every deploy
-before 'deploy', 'rvm:install_rvm'
+# before 'deploy', 'rvm:install_rvm'
 
 ### End Capistrano/RVM Gem ###
 
