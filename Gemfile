@@ -15,7 +15,6 @@ gem 'multi_json'
 
 # JavaScript parsing/running
 gem 'execjs'
-gem 'therubyracer'
 
 # JQuery for Rails
 gem 'jquery-rails'
