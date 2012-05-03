@@ -49,10 +49,16 @@ set :rvm_ruby_string, '1.9.3@hexedguild'
 ### End Capistrano/RVM Gem ###
 
 namespace :deploy do
-# task :start {}
-# task :stop {}
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
+	task :start, :roles => :app do
+		run "touch #{current_path}/tmp/restart.txt"
+	end
+
+  task :stop do
+	end
+
+	desc "Restart Application"
+	task :restart, :roles => :app do
+		run "touch #{current_path}/tmp/restart.txt"
+	end
 end
 

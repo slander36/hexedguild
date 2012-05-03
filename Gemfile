@@ -33,6 +33,8 @@ group :development do
 	# Include capistrano for rvm deploy
 	gem 'capistrano'
 	gem 'rvm-capistrano'
+	# Including passenger
+	gem 'passenger'
 end
 
 group :test do
