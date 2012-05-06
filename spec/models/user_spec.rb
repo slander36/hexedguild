@@ -36,7 +36,25 @@ describe User do
 	it { should respond_to(:password_confirmation) }
 	it { should respond_to(:remember_token) }
 
+	it { should respond_to(:member) }
+	it { should respond_to(:admin) }
+
+	it { should respond_to(:wow_toons) }
+	it { should respond_to(:tera_toons) }
+
 	it { should be_valid }
+	it { should_not be_member }
+	it { should_not be_admin }
+
+	describe "with member attribute set to 'true'" do
+		before { @user.toggle!(:member) }
+		it { should be_member }
+	end
+
+	describe "with admin attribute set to 'true'" do
+		before { @user.toggle!(:admin) }
+		it { should be_admin }
+	end
 
 	describe "when name is not present" do
 		before { @user.name = " " }
@@ -132,5 +150,49 @@ describe User do
 	describe "remember token" do
 		before { @user.save }
 		its(:remember_token) { should_not be_blank }
+	end
+
+	describe "wow_toon associations" do
+		before { @user.save }
+		let!(:older_wow_toon) do
+			FactoryGirl.create(:wow_toon, user: @user, created_at: 1.day.ago)
+		end
+		let!(:newer_wow_toon) do
+			FactoryGirl.create(:wow_toon, user: @user, created_at: 1.hour.ago)
+		end
+
+		it "should have the right toons in the right order" do
+			@user.wow_toons.should == [newer_wow_toon, older_wow_toon]
+		end
+
+		it "should destroy associated wow_toons" do
+			wow_toons = @user.wow_toons
+			@user.destroy
+			wow_toons.each do |wow_toon|
+				WowToon.find_by_id(wow_toon.id).should be_nil
+			end
+		end
+	end
+
+	describe "tera_toon associations" do
+		before { @user.save }
+		let!(:older_tera_toon) do
+			FactoryGirl.create(:tera_toon, user: @user, created_at: 1.day.ago)
+		end
+		let!(:newer_tera_toon) do
+			FactoryGirl.create(:tera_toon, user: @user, created_at: 1.hour.ago)
+		end
+
+		it "should ahve the right toons in the right order" do
+			@user.tera_toons.should == [newer_tera_toon, older_tera_toon]
+		end
+
+		it "should destroy associated tera_toons" do
+			tera_toons = @user.tera_toons
+			@user.destroy
+			tera_toons.each do |tera_toon|
+				TeraToon.find_by_id(tera_toon.id).should be_nil
+			end
+		end
 	end
 end

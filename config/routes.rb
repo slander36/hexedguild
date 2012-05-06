@@ -1,24 +1,32 @@
 Hexedguild::Application.routes.draw do
-	resources :users
+	# resources :users
 	resources :sessions, only: [:new, :create, :destroy]
 
 	root to: 'static_pages#home'
 
-	match "/help", to: "static_pages#help"
-	match "/contact", to: "static_pages#contact"
-	match "/about", to: "static_pages#about"
+	match "help", to: "static_pages#help"
+	match "contact", to: "static_pages#contact"
+	match "about", to: "static_pages#about"
 
 	# WoW and TERA
-	match "/wow", to: "static_pages#wow"
-	match "/tera", to: "static_pages#tera"
+	match "wow", to: "static_pages#wow"
+	match "tera", to: "static_pages#tera"
 
 	# User Application
-	match "/apply", to: "users#new"
-	match "/signin", to: "sessions#new"
-	match "/signout", to: "sessions#destroy", via: :delete
+	match "apply", to: "users#new"
+	match "signin", to: "sessions#new"
+	match "signout", to: "sessions#destroy", via: :delete
 
 	# User Navigation
-	match "/!:character", to: "users#show", as: "character_page"
+	match "members(.:format)", to: "users#index", via: :get, as: "members"
+	match "members(.:format)", to: "users#create", via: :post
+	match "members/new(.:format)", to: "users#new", via: :get, as: "new_member"
+	match ":character/edit(.:format)", to: "users#edit", via: :get, as: "edit_member"
+	match ":character(.:format)", to: "users#show", via: :get, as: "member"
+	match ":character(.:format)", to: "users#update", via: :put
+	match ":character(.:format)", to: "users#destroy", via: :delete
+	match ":character/confirm(.:format)", to: "users#confirm", via: :put, as: "confirm_member"
+	resources :users
 
 # The priority is based upon order of creation:
   # first created -> highest priority.

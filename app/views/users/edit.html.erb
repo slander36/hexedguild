@@ -1,0 +1,17 @@
+<% provide(:title, "Edit User") %>
+<h1>Update your profile</h1>
+<div class='row'>
+	<div class='span6 offset3'>
+		<%= simple_form_for(@user) do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+
+			<%= f.input :name %>
+			<%= f.input :character %>
+			<%= f.input :email %>
+			<%= f.input :password %>
+			<%= f.input :password_confirmation, label: "Confirmation" %>
+
+			<%= f.submit "Save Changes", class: 'btn btn-large btn-primary' %>
+		<% end %>
+	</div>
+</div>

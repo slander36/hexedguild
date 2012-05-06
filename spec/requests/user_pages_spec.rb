@@ -4,6 +4,136 @@ describe "User pages" do
 	
 	subject { page }
 
+	describe "index" do
+
+		let(:user) { FactoryGirl.create(:user) }
+
+		before do
+			sign_in user
+			visit members_path
+		end
+
+		it { should have_selector('title',
+			text: 'All Members') }
+
+		describe "pagination" do
+			before(:all) { 30.times { FactoryGirl.create(:user) } }
+			after(:all) { User.delete_all }
+
+			it { should have_link('Next') }
+			its(:html) { should match('>2</a>') }
+
+			it "should list each user" do
+				User.all[0..2].each do |user|
+					page.should have_selector('li',
+						text: user.character)
+				end
+			end
+		end
+
+		describe "view link" do
+
+			before(:all) { 10.times { FactoryGirl.create(:user) } }
+			before(:all) { 10.times { FactoryGirl.create(:member) } }
+			before(:all) { 2.times { FactoryGirl.create(:admin) } }
+			after(:all) { User.delete_all }
+
+			let(:test) { FactoryGirl.create(:user) }
+
+			it { should_not have_link('View',
+				href: member_path(User.first.character)) }
+
+			shared_examples_for "a member" do
+				it { should have_link('View',
+					href: member_path(User.first.character)) }
+				describe "click link" do
+					before do
+						click_link "View"
+					end
+					it { should have_selector('title',
+						href: User.first.character) }
+				end
+			end
+
+			describe "as a member" do
+				let(:member) { FactoryGirl.create(:member) }
+				before do
+					sign_in member
+					visit members_path
+				end
+
+				it_should_behave_like "a member"
+			end
+
+			describe "as an admin" do
+				let(:admin) { FactoryGirl.create(:admin) }
+				before do
+					sign_in admin
+					visit members_path
+				end
+
+				it_should_behave_like "a member"
+			end
+		end
+
+		describe "confirm link" do
+
+			before(:all) { 10.times { FactoryGirl.create(:user) } }
+			before(:all) { 10.times { FactoryGirl.create(:member) } }
+			before(:all) { 2.times { FactoryGirl.create(:admin) } }
+			after(:all) { User.delete_all }
+
+			let(:test) { FactoryGirl.create(:user) }
+
+			it { should_not have_link('Confirm',
+				href: member_path(User.first.character)) }
+
+			describe "as an admin" do
+				let(:admin) { FactoryGirl.create(:admin) }
+				before do
+					sign_in admin
+					visit members_path
+				end
+				
+				it { should have_link('Confirm') }
+				describe "click confirm" do
+					before do
+						click_link 'Confirm'
+					end
+					it { should have_selector('div.alert.alert-success') }
+				end
+			end
+		end
+
+		describe "delete link" do
+
+			before(:all) { 10.times { FactoryGirl.create(:user) } }
+			before(:all) { 10.times { FactoryGirl.create(:member) } }
+			before(:all) { 2.times { FactoryGirl.create(:admin) } }
+			after(:all) { User.delete_all }
+
+			let(:test) { FactoryGirl.create(:user) }
+			
+			it { should_not have_link('Delete',
+				href: member_path(User.first.character)) }
+
+			describe "as an admin" do
+				let(:admin) { FactoryGirl.create(:admin) }
+				before do
+					sign_in admin
+					visit members_path
+				end
+
+				it { should have_link('Delete') }
+				it "should be able to delete another user" do
+					expect { click_link('Delete') }.to change(User, :count).by(-1)
+				end
+				it { should_not have_link('Delete',
+					href: member_path(admin.character)) }
+			end
+		end
+	end
+
 	describe "application page" do
 		before { visit apply_path }
 
@@ -14,13 +144,16 @@ describe "User pages" do
 	end
 
 	describe "profile page" do
-		let(:user) { FactoryGirl.create(:user) }
-		before { visit user_path(user) }
+		let(:user) { FactoryGirl.create(:member) }
+		before do
+			sign_in user
+			visit member_path(user.character)
+		end
 
 		it { should have_selector('h1',
-			text: user.name) }
+			text: user.character) }
 		it { should have_selector('title',
-			text: user.name) }
+			text: user.character) }
 	end
 
 	describe "apply" do
@@ -60,12 +193,56 @@ describe "User pages" do
 				let(:user) { User.find_by_email("user@example.com") }
 
 				it { should have_selector('title',
-					text: user.name) }
+					text: user.character) }
 				it { should have_selector('div.alert.alert-success',
 					text: "Welcome") }
-				it { should have_link('Sign out',
+				it { should have_link('Sign Out',
 					href: signout_path) }
 			end
+		end
+	end
+
+	describe "edit" do
+		let(:user) { FactoryGirl.create(:user) }
+		before do
+			sign_in user
+			visit edit_member_path(user.character)
+		end
+
+		describe "page" do
+			it { should have_selector('h1',
+				text: "Update your profile") }
+			it { should have_selector('title',
+				text: "Edit User") }
+		end
+
+		describe "with invalid information" do
+			before { click_button "Save Changes" }
+
+			it { should have_content('error') }
+		end
+
+		describe "with valid information" do
+			let(:new_name) { "New Name" }
+			let(:new_character) { "New Character" }
+			let(:new_email) { "new@example.com" }
+			before do
+				fill_in "Name",					with: new_name
+				fill_in "Character",		with: new_character
+				fill_in "Email",				with: new_email
+				fill_in "Password",			with: user.password
+				fill_in "Confirmation",	with: user.password
+				click_button "Save Changes"
+			end
+
+			it { should have_selector('title',
+				text: new_character) }
+			it { should have_selector('div.alert.alert-success') }
+			it { should have_link('Sign Out',
+				href: signout_path) }
+			specify { user.reload.name.should == new_name }
+			specify { user.reload.character.should == new_character }
+			specify { user.reload.email.should == new_email }
 		end
 	end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503220630) do
+ActiveRecord::Schema.define(:version => 20120505193427) do
 
   create_table "applications", :force => true do |t|
     t.string   "content"
@@ -20,18 +20,38 @@ ActiveRecord::Schema.define(:version => 20120503220630) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "tera_toons", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "tera_toons", ["user_id"], :name => "index_tera_toons_on_user_id"
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "character"
     t.string   "email"
     t.boolean  "tera"
     t.boolean  "wow"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "password_digest"
     t.string   "remember_token"
+    t.boolean  "member",          :default => false
+    t.boolean  "admin",           :default => false
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+
+  create_table "wow_toons", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "wow_toons", ["user_id"], :name => "index_wow_toons_on_user_id"
 
 end

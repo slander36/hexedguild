@@ -1,0 +1,12 @@
+<li>
+	<%= user.character %>
+	<% if current_user.member? or current_user?(user) %>
+		| <%= link_to "View", member_path(user.character) %>
+	<% end %>
+	<% if current_user.admin? && !current_user?(user) %>
+		<% if not user.member? %>
+			| <%= link_to "Confirm", confirm_member_path(user.character), method: :put, confirm: "You Sure?" %>
+		<% end %>
+		| <%= link_to "Delete", user, method: :delete, confirm: "You Sure?" %>
+	<% end %>
+</li>
