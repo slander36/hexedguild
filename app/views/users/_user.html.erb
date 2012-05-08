@@ -9,4 +9,10 @@
 		<% end %>
 		| <%= link_to "Delete", user, method: :delete, confirm: "You Sure?" %>
 	<% end %>
+	<% if user.wow %>
+		<%= image_tag('wow_icon.png') %>
+	<% end %>
+	<% if user.tera %>
+		<%= image_tag('tera_icon.jpg') %>
+	<% end %>
 </li>

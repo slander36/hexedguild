@@ -15,7 +15,19 @@ html {
 }
 
 body {
-	padding-top: 60px;
+	padding-top: 191px;
+	&.combined {
+		background-image: url('/assets/combined_background.jpg');
+	}
+	&.wow {
+		background-image: url('/assets/wow_background.jpg');
+	}
+	&.tera {
+		background-image: url('/assets/tera_background.jpg');
+	}
+	background-position: 0 40px;
+	background-color: black;
+	background-repeat: no-repeat;
 }
 
 section {
@@ -33,6 +45,13 @@ textarea {
 	}
 }
 
+/* Container */
+.container {
+	width: 993px;
+	margin-left: 344px;
+	color: $warningBackground;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -44,6 +63,7 @@ h1 {
 	letter-spacing: -2px;
 	margin-bottom: 30px;
 	text-align: center;
+	color: $grayLight;
 }
 
 h2 {
@@ -148,6 +168,13 @@ input, textarea, select, .uneditable-input {
 .field_with_errors {
 	@extend .control-group;
 	@extend .error;
+}
+
+/* Villian Unit */
+
+.villain-unit {
+	@extend .hero-unit;
+	background-color: inherit;
 }
 
 /* users index */
