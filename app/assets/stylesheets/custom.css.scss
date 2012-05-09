@@ -15,19 +15,9 @@ html {
 }
 
 body {
-	padding-top: 191px;
-	&.combined {
-		background-image: url('/assets/combined_background.jpg');
-	}
-	&.wow {
-		background-image: url('/assets/wow_background.jpg');
-	}
-	&.tera {
-		background-image: url('/assets/tera_background.jpg');
-	}
-	background-position: 0 40px;
-	background-color: black;
-	background-repeat: no-repeat;
+	margin: 0;
+	padding: 0;
+	background: black;
 }
 
 section {
@@ -46,9 +36,31 @@ textarea {
 }
 
 /* Container */
+
+.page {
+	padding-top: 192px;
+	&.combined {
+		background-image: url('/assets/combined_background.jpg');
+	}
+	&.wow {
+		background-image: url('/assets/wow_background.jpg');
+	}
+	&.tera {
+		background-image: url('/assets/tera_background.jpg');
+	}
+	background-position-x: 50%;
+	background-position-y: 40px;
+	background-color: black;
+	background-repeat: no-repeat;
+	min-width: 1000px;
+	height: 1140px;
+}
+
+$containerWidth: 993px;
+
 .container {
-	width: 993px;
-	margin-left: 344px;
+	width: $containerWidth;
+	margin: 0 auto;
 	color: $warningBackground;
 }
 
@@ -99,8 +111,10 @@ p {
 /* footer */
 
 footer {
-	margin-top: 45px;
-	padding-top: 5px;
+	width: $containerWidth;
+	margin: 45px auto 0 auto;
+	padding-top: 10px;
+	padding-bottom: 20px;
 	border-top: 1px solid $grayLight;
 	color: $grayLight;
 	a {
