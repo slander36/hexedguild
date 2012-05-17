@@ -9,6 +9,11 @@
 			<h4>
 				Member: <%= @user.member %>
 			</h4>
+			<% if current_user.admin? %>
+				<p>
+					<%= @user.apply %>
+				</p>
+			<% end %>
 		</section>
 	</aside>
 	<div class='span10'>

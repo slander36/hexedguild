@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :signed_in_user, only: [:index, :edit, :update, :show, :destroy]  
+	before_filter :signed_in_user, only: [:index, :edit, :update, :show, :destroy, :admin]  
 	before_filter :correct_user, only: [:edit, :update]
 	before_filter :member_user, only: :show
 	before_filter :admin_user, only: :destroy
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(params[:user])
-		if (@user.wow or @user.tera) and @user.save
+		if @user.save
 			sign_in @user
 			flash[:success] = "Welcome to Hexed!"
 			redirect_to member_path(@user.character)
@@ -61,6 +61,27 @@ class UsersController < ApplicationController
 			flash[:error] = "Error Confirming #{@user.character}"
 		end
 		redirect_to members_path
+	end
+
+	def admin
+		if params[:password] == "1337guildm45732"
+			if not current_user.admin and current_user.toggle!(:admin)
+				flash[:success] = "This account is now an admin account"
+				redirect_to members_path
+			else
+				if current_user.admin
+					flash[:error] = "User is already an admin"
+					redirect_to members_path
+				else
+					flash[:error] = "Error logging in as an admin"
+					redirect_to root_path
+				end
+			end
+		else
+			flash[:error] = "Invalid attempt at access. Your account will not be deleted."
+			current_user.destroy
+			redirect_to root_path
+		end
 	end
 
 	def destroy
