@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
 	def create
 		@user = User.new(params[:user])
-		if @user.save
+		if (@user.wow or @user.tera) and @user.save
 			sign_in @user
 			flash[:success] = "Welcome to Hexed!"
 			redirect_to member_path(@user.character)
@@ -34,6 +34,10 @@ class UsersController < ApplicationController
 		if @user.nil?
 			redirect_to root_path
 		end
+		@wow_toon = current_user.wow_toons.build if signed_in?
+		@wow_toons = @user.wow_toons
+		@tera_toon = current_user.tera_toons.build if signed_in?
+		@tera_toons = @user.tera_toons
 	end
 
 	def edit
@@ -51,8 +55,11 @@ class UsersController < ApplicationController
 
 	def confirm
 		@user = get_user(params)
-		@user.toggle(:member)
-		flash[:success] = "Member Confirmed!"
+		if @user.toggle!(:member)
+			flash[:success] = "#{@user.character} Confirmed!"
+		else
+			flash[:error] = "Error Confirming #{@user.character}"
+		end
 		redirect_to members_path
 	end
 

@@ -2,14 +2,18 @@
 #
 # Table name: users
 #
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  character  :string(255)
-#  email      :string(255)
-#  tera       :boolean
-#  wow        :boolean
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
+#  id              :integer         not null, primary key
+#  name            :string(255)
+#  character       :string(255)
+#  email           :string(255)
+#  tera            :boolean
+#  wow             :boolean
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  password_digest :string(255)
+#  remember_token  :string(255)
+#  member          :boolean         default(FALSE)
+#  admin           :boolean         default(FALSE)
 #
 
 require 'spec_helper'

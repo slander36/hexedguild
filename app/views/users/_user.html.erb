@@ -1,18 +1,41 @@
-<li>
-	<%= user.character %>
+<li class='row'>
+	<% if user.wow %>
+		<div class='span1'>
+			<%= image_tag('wow_icon.png') %>
+		</div>
+		<% if user.tera %>
+			<div class='span1'>
+				<%= image_tag('tera_icon.jpg') %>
+			</div>
+			<h4 class='span2'>
+				<%= user.character %>
+			</h4>
+		<% else %>
+			<h4 class='span2 offset1'>
+				<%= user.character %>
+			</h4>
+		<% end %>
+	<% else %>
+		<% if user.tera %>
+			<div class='span1 offset1'>
+				<%= image_tag('tera_icon.jpg') %>
+			</div>
+			<h4 class='span2'>
+				<%= user.character %>
+			</h4>
+		<% else %>
+			<h4 class='span2 offset2'>
+				<%= user.character %>
+			</h4>
+		<% end %>
+	<% end %>
 	<% if current_user.member? or current_user?(user) %>
-		| <%= link_to "View", member_path(user.character) %>
+		<%= link_to "View", member_path(user.character), class: 'span1' %>
 	<% end %>
 	<% if current_user.admin? && !current_user?(user) %>
 		<% if not user.member? %>
-			| <%= link_to "Confirm", confirm_member_path(user.character), method: :put, confirm: "You Sure?" %>
+			<%= link_to "Confirm", confirm_member_path(user.character), method: :put, confirm: "You Sure?", class: 'span1' %>
 		<% end %>
-		| <%= link_to "Delete", user, method: :delete, confirm: "You Sure?" %>
-	<% end %>
-	<% if user.wow %>
-		<%= image_tag('wow_icon.png') %>
-	<% end %>
-	<% if user.tera %>
-		<%= image_tag('tera_icon.jpg') %>
+			<%= link_to "Delete", user, method: :delete, confirm: "You Sure?", class: 'span1' %>
 	<% end %>
 </li>

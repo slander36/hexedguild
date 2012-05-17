@@ -38,7 +38,8 @@ textarea {
 /* Container */
 
 .page {
-	padding-top: 192px;
+	position: relative;
+	padding-top: 188px;
 	&.combined {
 		background-image: url('/assets/combined_background.jpg');
 	}
@@ -52,15 +53,17 @@ textarea {
 	background-position-y: 40px;
 	background-color: black;
 	background-repeat: no-repeat;
-	min-width: 1000px;
+	min-width: 994px;
 	height: 1140px;
 }
 
-$containerWidth: 993px;
+$containerWidth: 974px;
 
 .container {
+	position: relative;
 	width: $containerWidth;
 	margin: 0 auto;
+	padding: 10px;
 	color: $warningBackground;
 }
 
@@ -198,10 +201,15 @@ input, textarea, select, .uneditable-input {
 	margin: 0;
 	li {
 		overflow: auto;
+		margin-left: 0;
 		padding: 10px 0;
 		border-top: 1px solid $grayLighter;
 		&:last-child {
 			border-bottom: 1px solid $grayLighter;
+		}
+		img {
+			height: 32px;
+			width: 32px;
 		}
 	}
 }

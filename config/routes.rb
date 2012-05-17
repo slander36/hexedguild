@@ -1,5 +1,7 @@
 Hexedguild::Application.routes.draw do
-	# resources :users
+	resources :users
+	resources :wow_toons, only: [:create, :destroy]
+	resources :tera_toons, only: [:create, :destroy]
 	resources :sessions, only: [:new, :create, :destroy]
 
 	root to: 'static_pages#home'
@@ -26,7 +28,6 @@ Hexedguild::Application.routes.draw do
 	match ":character(.:format)", to: "users#update", via: :put
 	match ":character(.:format)", to: "users#destroy", via: :delete
 	match ":character/confirm(.:format)", to: "users#confirm", via: :put, as: "confirm_member"
-	resources :users
 
 # The priority is based upon order of creation:
   # first created -> highest priority.

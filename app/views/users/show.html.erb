@@ -1,11 +1,62 @@
 <% provide(:title, @user.character) %>
 <% provide(:game, user_game(@user)) %>
 <div class='row'>
-	<aside class='span4'>
+	<aside class='span2'>
 		<section>
 			<h1>
 				<%= @user.character %>
 			</h1>
+			<h4>
+				Member: <%= @user.member %>
+			</h4>
 		</section>
 	</aside>
+	<div class='span10'>
+		<div class= 'row'>
+			<div class='span4 offset1'>
+				<h4>WoW Toons</h4>
+				<% if @wow_toons.any? %>
+					<ul>
+						<% @wow_toons.each do |toon| %>
+							<li>
+								<%= toon.name %>
+								<% if @user == current_user %>
+									<%= link_to 'Delete', toon, method: :delete, confirm: "Are you sure?" %>
+								<% end %>
+							</li>
+						<% end %>
+					</ul>
+				<% end %>
+				<% if @user == current_user %>
+					<%= form_for @wow_toon do |f| %>
+						<%= f.label 'New Toon' %>
+						<%= f.text_field :name %>
+						<%= f.submit 'Create' %>
+					<% end %>
+				<% end %>
+			</div>
+			<div class='span4 offset1'>
+				<h4>TERA Toons</h4>
+				<% if @tera_toons.any? %>
+					<ul>
+						<% @tera_toons.each do |toon| %>
+							<li>
+								<%= toon.name %>
+								<% if @user == current_user %>
+									<%= link_to 'Delete', toon, method: :delete, confirm: "Are you sure?" %>
+								<% end %>
+							</li>
+						<% end %>
+					</ul>
+				<% end %>
+				<% if @user == current_user %>
+					<%= form_for @tera_toon do |f| %>
+						<%= f.label 'New Toon' %>
+						<%= f.text_field :name %>
+						<%= f.submit 'Create' %>
+					<% end %>
+				<% end %>
+			</div>
+		</div>
+	</div>
 </div>
