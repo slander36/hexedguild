@@ -22,21 +22,21 @@
 				<h4>WoW Toons</h4>
 				<% if @wow_toons.any? %>
 					<ul>
-						<% @wow_toons.each do |toon| %>
+						<% @wow_toons.each do |wtoon| %>
 							<li>
-								<%= toon.name %>
+								<%= wtoon.name %>
 								<% if @user == current_user %>
-									<%= link_to 'Delete', toon, method: :delete, confirm: "Are you sure?" %>
+									<%= link_to 'Delete', wtoon, method: :delete, confirm: "Are you sure?" %>
 								<% end %>
 							</li>
 						<% end %>
 					</ul>
 				<% end %>
 				<% if @user == current_user %>
-					<%= form_for @wow_toon do |f| %>
-						<%= f.label 'New Toon' %>
-						<%= f.text_field :name %>
-						<%= f.submit 'Create' %>
+					<%= form_for @wow_toon do |wf| %>
+						<%= wf.label 'New Toon' %>
+						<%= wf.text_field :name %>
+						<%= wf.submit 'Create' %>
 					<% end %>
 				<% end %>
 			</div>
@@ -44,21 +44,21 @@
 				<h4>TERA Toons</h4>
 				<% if @tera_toons.any? %>
 					<ul>
-						<% @tera_toons.each do |toon| %>
+						<% @tera_toons.each do |ttoon| %>
 							<li>
-								<%= toon.name %>
+								<%= ttoon.name %>
 								<% if @user == current_user %>
-									<%= link_to 'Delete', toon, method: :delete, confirm: "Are you sure?" %>
+									<%= link_to 'Delete', ttoon, method: :delete, confirm: "Are you sure?" %>
 								<% end %>
 							</li>
 						<% end %>
 					</ul>
 				<% end %>
 				<% if @user == current_user %>
-					<%= form_for @tera_toon do |f| %>
-						<%= f.label 'New Toon' %>
-						<%= f.text_field :name %>
-						<%= f.submit 'Create' %>
+					<%= form_for @tera_toon do |tf| %>
+						<%= tf.label 'New Toon' %>
+						<%= tf.text_field :name %>
+						<%= tf.submit 'Create' %>
 					<% end %>
 				<% end %>
 			</div>
