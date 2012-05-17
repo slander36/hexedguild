@@ -13,7 +13,7 @@ class TeraToonsController < ApplicationController
 	end
 
 	def destroy
-		@toon = WowToon.find(params[:id])
+		@toon = TeraToon.find(params[:id])
 		if @toon.user == current_user
 			if @toon.destroy
 				flash[:success] = "Character Deleted"
