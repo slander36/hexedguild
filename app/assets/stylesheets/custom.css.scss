@@ -261,6 +261,15 @@ input, textarea, select, .uneditable-input {
 		}
 		opacity: 1.0 !important;
 	}
+	ul {
+		list-style: none;
+		margin-top: 10px;
+		margin-bottom: 10px;
+		li {
+			padding: 6px 0;
+			border: none;
+		}
+	}
 }
 .timestamp {
 	color: $grayLight;
