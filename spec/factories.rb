@@ -3,6 +3,9 @@ FactoryGirl.define do
 		sequence(:name) { |n| "Person #{n}" }
 		sequence(:character) { |n| "Character #{n}" }
 		sequence(:email) { |n| "person_#{n}@example.com" }
+		wow true
+		tera true
+		apply "This is an application to Hexed"
 		password	"foobar"
 		password_confirmation	"foobar"
 
@@ -23,6 +26,15 @@ FactoryGirl.define do
 
 	factory :tera_toon do
 		name "Eilin"
+		user
+	end
+
+	factory :article do
+		title "Title"
+		content "Lorem Ipsum"
+		wow false
+		tera false
+		announcement false
 		user
 	end
 end

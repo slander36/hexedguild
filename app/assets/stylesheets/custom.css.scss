@@ -214,6 +214,41 @@ input, textarea, select, .uneditable-input {
 	}
 }
 
+/* Articles */
+
+.articles {
+	list-style: none;
+	margin: 10px 0 0 0;
+
+	li {
+		padding: 10px 0;
+		border-top: 1px solid $grayDarker;
+		.title {
+			margin-bottom: 10px;
+		}
+		&.announcement {
+			font-size: 1.2em;
+			.title {
+				font-size: 1.4em;
+			}
+		}
+	}
+}
+
+.content {
+	display: block;
+}
+.timestamp {
+	color: $grayLight;
+}
+
+aside {
+	textarea {
+		height: 100px;
+		margin-bottom: 5px;
+	}
+}
+
 /* miscellaneous */
 
 .debug_dump {

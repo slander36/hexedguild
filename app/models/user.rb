@@ -14,6 +14,7 @@
 #  remember_token  :string(255)
 #  member          :boolean         default(FALSE)
 #  admin           :boolean         default(FALSE)
+#  apply           :string(255)
 #
 
 class User < ActiveRecord::Base
@@ -22,6 +23,7 @@ class User < ActiveRecord::Base
 
 	has_many :wow_toons, dependent: :destroy
 	has_many :tera_toons, dependent: :destroy
+	has_many :articles
 
 	before_save { |user| user.email = email.downcase }
 	before_save :create_remember_token

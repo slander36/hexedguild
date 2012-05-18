@@ -20,6 +20,22 @@ describe "Static pages" do
 		it_should_behave_like "all static pages"
 		it { should_not have_selector 'title',
 			text: "| Home" }
+
+		describe "for signed-in users" do
+			let(:user) { FactoryGirl.create(:member) }
+			before do
+				FactoryGirl.create(:article, user: user, wow: true, title: "Post 1")
+				FactoryGirl.create(:article, user: user, tera: true, title: "Post 2")
+				sign_in user
+				visit root_path
+			end
+
+			it "should render the user's articles" do
+				user.articles.limit(20) do |item|
+					page.should have_selector("li##{item.id}", text: item.title)
+				end
+			end
+		end
 	end
 
 	describe "Help page" do

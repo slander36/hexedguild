@@ -14,6 +14,7 @@
 #  remember_token  :string(255)
 #  member          :boolean         default(FALSE)
 #  admin           :boolean         default(FALSE)
+#  apply           :string(255)
 #
 
 require 'spec_helper'
@@ -25,6 +26,7 @@ describe User do
 		email: "user@example.com",
 		tera: true,
 		wow: true,
+		apply: "Application",
 		password: "foobar",
 		password_confirmation: "foobar") }
 
@@ -45,6 +47,8 @@ describe User do
 
 	it { should respond_to(:wow_toons) }
 	it { should respond_to(:tera_toons) }
+
+	it { should respond_to(:articles) }
 
 	it { should be_valid }
 	it { should_not be_member }
@@ -159,10 +163,16 @@ describe User do
 	describe "wow_toon associations" do
 		before { @user.save }
 		let!(:older_wow_toon) do
-			FactoryGirl.create(:wow_toon, user: @user, created_at: 1.day.ago)
+			FactoryGirl.create(:wow_toon,
+				user: @user,
+				name: "Toon1",
+				created_at: 1.day.ago)
 		end
 		let!(:newer_wow_toon) do
-			FactoryGirl.create(:wow_toon, user: @user, created_at: 1.hour.ago)
+			FactoryGirl.create(:wow_toon,
+				user: @user,
+				name: "Toon2",
+				created_at: 1.hour.ago)
 		end
 
 		it "should have the right toons in the right order" do
@@ -181,10 +191,16 @@ describe User do
 	describe "tera_toon associations" do
 		before { @user.save }
 		let!(:older_tera_toon) do
-			FactoryGirl.create(:tera_toon, user: @user, created_at: 1.day.ago)
+			FactoryGirl.create(:tera_toon,
+				name: "Toon1",
+				user: @user,
+				created_at: 1.day.ago)
 		end
 		let!(:newer_tera_toon) do
-			FactoryGirl.create(:tera_toon, user: @user, created_at: 1.hour.ago)
+			FactoryGirl.create(:tera_toon,
+				name: "Toon2",
+				user: @user,
+				created_at: 1.hour.ago)
 		end
 
 		it "should ahve the right toons in the right order" do
@@ -197,6 +213,20 @@ describe User do
 			tera_toons.each do |tera_toon|
 				TeraToon.find_by_id(tera_toon.id).should be_nil
 			end
+		end
+	end
+
+	describe "article association" do
+		before { @user.save }
+		let!(:older_article) do
+			FactoryGirl.create(:article, user: @user, created_at: 1.day.ago)
+		end
+		let!(:newer_article) do
+			FactoryGirl.create(:article, user: @user, created_at: 1.hour.ago)
+		end
+
+		it "should have the right articles in the right order" do
+			@user.articles.should == [newer_article, older_article]
 		end
 	end
 end

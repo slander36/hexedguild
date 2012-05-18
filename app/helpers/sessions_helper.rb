@@ -33,6 +33,32 @@ module SessionsHelper
 		end
 	end
 
+	def get_user(params)
+		if params[:id]
+			@user = User.find_by_id(params[:id])
+		end
+		if params[:character]
+			@user = User.find_by_character(params[:character])
+		end
+		return @user
+	end
+
+	def correct_user
+		@user = get_user(params)
+		redirect_to(root_path) unless current_user?(@user)
+	end
+
+	def member_user
+		@user = get_user(params)
+		unless ( current_user.member? or current_user?(@user) )
+			redirect_to(root_path)
+		end
+	end
+
+	def admin_user
+		redirect_to(root_path) unless current_user.admin?
+	end
+
 	def redirect_back_or(default)
 		redirect_to(session[:return_to] || default)
 		clear_return_to

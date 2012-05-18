@@ -1,0 +1,19 @@
+<%= form_for(@article) do |f| %>
+	<%= render "shared/error_messages", object: f.object %>
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+	<div class='field'>
+		<%= f.label :content %>
+		<%= f.text_area :content, placeholder: "Enter the article contents here..." %>
+	</div>
+	<%= f.label :wow %>
+	<%= f.check_box :wow %>
+	<%= f.label :tera %>
+	<%= f.check_box :tera %>
+	<% if current_user.admin %>
+		<%= f.label :announcement %>
+		<%= f.check_box :announcement %>
+	<% end %>
+	<br/>
+	<%= f.submit "Post", class: 'btn btn-large' %>
+<% end %>

@@ -6,10 +6,17 @@
 			<h1>
 				<%= @user.character %>
 			</h1>
+			<br/>
 			<h4>
-				Member: <%= @user.member %>
+				<% if @user.member %>
+					Guildy
+				<% else %>
+					Recruit
+				<% end %>
 			</h4>
+			<br/>
 			<% if current_user.admin? %>
+				<h4>Application</h4>
 				<p>
 					<%= @user.apply %>
 				</p>
@@ -65,3 +72,7 @@
 		</div>
 	</div>
 </div>
+<% if @user.articles.any? %>
+	<h3>Articles <%= @user.articles.count %></h3>
+	<%= render 'shared/view_articles' %>
+<% end %>

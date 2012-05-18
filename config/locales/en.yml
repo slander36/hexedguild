@@ -7,3 +7,10 @@ en:
     attributes:
       user:
         password_digest: "Password"
+        wow: "WoW"
+        tera: "TERA"
+        apply: "Application"
+        password_confirmation: "Password Confirmation"
+      article:
+        wow: "WoW"
+        tera: "TERA"

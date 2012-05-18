@@ -1,10 +1,33 @@
 <% provide(:game, 'combined') %>
-<div class='center villain-unit'>
-	<h1>Hexed Guild</h1>
-
-	<h2>
-		The site for all things Hexed.
-	</h2>
-
-	<%= link_to "Apply now!", apply_path, class: "btn btn-large btn-primary" %>
-</div>
+<% if signed_in? %>
+	<div class='row'>
+		<aside class='span4'>
+			<section>
+				<%= render 'shared/user_info' %>
+			</section>
+			<% if current_user.member %>
+			<section>
+				<%= render 'shared/article_form' %>
+			</section>
+			<% end %>
+		</aside>
+		<div class='span7 offset1'>
+			<ol class='articles'>
+				<%= render @announcement %>
+			</ol>
+			<ol class='articles'>
+				<%= render @articles %>
+			</ol>
+		</div>
+	</div>
+<% else %>
+	<div class='center villain-unit'>
+		<h1>Hexed Guild</h1>
+	
+		<h2>
+			The site for all things Hexed.
+		</h2>
+	
+		<%= link_to "Apply now!", apply_path, class: "btn btn-large btn-primary" %>
+	</div>
+<% end %>

@@ -54,5 +54,18 @@ namespace :db do
 				password: password,
 				password_confirmation: password)
 		end
+
+		users = User.where(member: true).limit(6)
+		50.times do |n|
+			title = Faker::Lorem.sentence(3)
+			content = Faker::Lorem.sentence(20)
+			wow = ( n % 2 == 0 ? true : false )
+			tera = ( n % 3 == 0 ? true : false )
+			unless wow or tera
+				wow = true
+			end
+			announcement = ( n % 7 == 0 ? true : false )
+			users.each { |user| user.articles.create!(title: title, content: title, wow: wow, tera: tera, announcement: announcement) }
+		end
 	end
 end

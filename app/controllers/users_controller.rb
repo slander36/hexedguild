@@ -24,20 +24,17 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		if params[:id]
-			@user = User.find(params[:id])
-		end
-		if params[:character]
-			@user = User.find_by_character(params[:character])
-		end
-
+		@user = get_user(params)
 		if @user.nil?
+			flash[:notice] = "User not found"
 			redirect_to root_path
+		else
+			@wow_toon = current_user.wow_toons.build if signed_in?
+			@wow_toons = @user.wow_toons
+			@tera_toon = current_user.tera_toons.build if signed_in?
+			@tera_toons = @user.tera_toons
+			@articles = @user.articles.paginate(page: params[:page], per_page: 20)
 		end
-		@wow_toon = current_user.wow_toons.build if signed_in?
-		@wow_toons = @user.wow_toons
-		@tera_toon = current_user.tera_toons.build if signed_in?
-		@tera_toons = @user.tera_toons
 	end
 
 	def edit
@@ -55,30 +52,43 @@ class UsersController < ApplicationController
 
 	def confirm
 		@user = get_user(params)
+		if @user == current_user
+			@relog = true
+		end
 		if @user.toggle!(:member)
 			flash[:success] = "#{@user.character} Confirmed!"
 		else
 			flash[:error] = "Error Confirming #{@user.character}"
 		end
+		if @relog
+			sign_out
+			sign_in @user
+		end
 		redirect_to members_path
 	end
 
 	def admin
+	end
+
+	def admin_login
 		if params[:password] == "1337guildm45732"
-			if not current_user.admin and current_user.toggle!(:admin)
+			@user = current_user
+			if not @user.admin and @user.toggle!(:admin)
+				sign_out
+				sign_in @user
 				flash[:success] = "This account is now an admin account"
-				redirect_to members_path
+				redirect_to @user
 			else
-				if current_user.admin
+				if @user.admin
 					flash[:error] = "User is already an admin"
-					redirect_to members_path
+					redirect_to @user
 				else
 					flash[:error] = "Error logging in as an admin"
 					redirect_to root_path
 				end
 			end
 		else
-			flash[:error] = "Invalid attempt at access. Your account will not be deleted."
+			flash[:error] = "Invalid attempt at access. Your account will now be deleted."
 			current_user.destroy
 			redirect_to root_path
 		end
@@ -89,39 +99,4 @@ class UsersController < ApplicationController
 		flash[:success] = "User destroyed."
 		redirect_to members_path
 	end
-
-	private
-
-		def get_user(params)
-			if params[:id]
-				@user = User.find(params[:id])
-			end
-			if params[:character]
-				@user = User.find_by_character(params[:character])
-			end
-			@user
-		end
-
-		def signed_in_user
-			unless signed_in?
-				store_location
-				redirect_to signin_path, notice: "Please sign in."
-			end			
-		end
-
-		def correct_user
-			@user = get_user(params)
-			redirect_to(root_path) unless current_user?(@user)
-		end
-
-		def member_user
-			@user = get_user(params)
-			unless ( current_user.member? or current_user?(@user) )
-				redirect_to(root_path)
-			end
-		end
-
-		def admin_user
-			redirect_to(root_path) unless current_user.admin?
-		end
 end

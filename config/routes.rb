@@ -16,8 +16,8 @@ Hexedguild::Application.routes.draw do
 	match "signout", to: "sessions#destroy", via: :delete
 
 	# Admin Login
-	match "admin", to: "static_pages#admin", via: :get
-	match "admin", to: "users#admin", via: :post, as: "admin"
+	match "admin", to: "users#admin", via: :get, as: "admin"
+	match "admin", to: "users#admin_login", via: :post, as: "admin_login"
 
 	# User Navigation
 	match "members(.:format)", to: "users#index", via: :get, as: "members"
@@ -34,6 +34,7 @@ Hexedguild::Application.routes.draw do
 	resources :wow_toons, only: [:create, :destroy]
 	resources :tera_toons, only: [:create, :destroy]
 	resources :sessions, only: [:new, :create, :destroy]
+	resources :articles, only: [:create, :destroy]
 
 # The priority is based upon order of creation:
   # first created -> highest priority.

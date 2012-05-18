@@ -145,6 +145,20 @@ describe "User pages" do
 
 	describe "profile page" do
 		let(:user) { FactoryGirl.create(:member) }
+		let!(:a1) do
+			FactoryGirl.create(:article,
+				user: user,
+				title: "Foo Title",
+				content: "Foo Content",
+				wow: true)
+		end
+		let!(:a2) do
+			FactoryGirl.create(:article,
+				user: user,
+				title: "Bar Title",
+				content: "Bar Content",
+				tera: true)
+		end
 		before do
 			sign_in user
 			visit member_path(user.character)
@@ -154,6 +168,52 @@ describe "User pages" do
 			text: user.character) }
 		it { should have_selector('title',
 			text: user.character) }
+
+		describe "article" do
+			it { should have_content(a1.title) }
+			it { should have_content(a1.content) }
+			it { should have_content(a2.title) }
+			it { should have_content(a2.content) }
+			it { should have_content(user.articles.count) }
+		end
+	end
+
+	describe "admin profile page" do
+		let(:user) { FactoryGirl.create(:admin) }
+		let!(:a1) do
+			FactoryGirl.create(:article,
+				user: user,
+				title: "Foo Title",
+				content: "Foo Content",
+				wow: true,
+				announcement: true)
+		end
+		let!(:a2) do
+			FactoryGirl.create(:article,
+				user: user,
+				title: "Bar Title",
+				content: "Bar Content",
+				tera: true)
+		end
+
+		before do
+			sign_in user
+			visit user_path(user)
+		end
+
+		it { should have_selector('h1',
+			text: user.character) }
+		it { should have_selector('title',
+			text: user.character) }
+
+		describe "article" do
+			it { should have_content(a1.title) }
+			it { should have_content(a1.content) }
+			it { should have_content(a2.title) }
+			it { should have_content(a2.content) }
+			it { should have_content(user.articles.count) }
+		end
+
 	end
 
 	describe "apply" do
@@ -180,6 +240,9 @@ describe "User pages" do
 				fill_in	"Name",					with: "Example User"
 				fill_in "Character",		with: "Foobar"
 				fill_in "Email",				with: "user@example.com"
+				check 	"WoW"
+				check		"TERA"
+				fill_in	"Application",	with: "This is an application"
 				fill_in "Password", 		with: "foobar"
 				fill_in "Confirmation",	with: "foobar"
 			end
