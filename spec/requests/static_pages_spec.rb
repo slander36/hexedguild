@@ -22,7 +22,7 @@ describe "Static pages" do
 			text: "| Home" }
 
 		describe "for signed-in users" do
-			let(:user) { FactoryGirl.create(:member) }
+			let(:user) { FactoryGirl.create(:user) }
 			before do
 				FactoryGirl.create(:article, user: user, wow: true, title: "Post 1")
 				FactoryGirl.create(:article, user: user, tera: true, title: "Post 2")
@@ -34,6 +34,10 @@ describe "Static pages" do
 				user.articles.limit(20) do |item|
 					page.should have_selector("li##{item.id}", text: item.title)
 				end
+			end
+
+			it "should not render members only articles" do
+				
 			end
 		end
 	end

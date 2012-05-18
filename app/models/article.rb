@@ -15,6 +15,7 @@
 
 class Article < ActiveRecord::Base
   attr_accessible :announcement,
+		:members_only,
 		:content,
 		:wow,
 		:tera,

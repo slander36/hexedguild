@@ -10,6 +10,8 @@
 	<%= f.check_box :wow %>
 	<%= f.label :tera %>
 	<%= f.check_box :tera %>
+	<%= f.label :members_only %>
+	<%= f.check_box :members_only %>
 	<% if current_user.admin %>
 		<%= f.label :announcement %>
 		<%= f.check_box :announcement %>

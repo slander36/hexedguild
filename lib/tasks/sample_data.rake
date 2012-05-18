@@ -65,7 +65,15 @@ namespace :db do
 				wow = true
 			end
 			announcement = ( n % 7 == 0 ? true : false )
-			users.each { |user| user.articles.create!(title: title, content: title, wow: wow, tera: tera, announcement: announcement) }
+			members_only = (n % 5 == 0 ? true : false )
+			users.each do |user|
+				user.articles.create!(title: title,
+					content: title,
+					wow: wow,
+					tera: tera,
+					members_only: members_only,
+					announcement: announcement)
+			end
 		end
 	end
 end
