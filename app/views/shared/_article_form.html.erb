@@ -15,6 +15,8 @@
 	<% if current_user.admin %>
 		<%= f.label :announcement %>
 		<%= f.check_box :announcement %>
+	<% else %>
+		<%= f.hidden_field :announcement, value: false %>
 	<% end %>
 	<br/>
 	<%= f.submit "Post", class: 'btn btn-large' %>
