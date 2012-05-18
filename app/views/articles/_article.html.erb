@@ -3,13 +3,18 @@
 <% else %>
 	<li>
 <% end %>
+<% if format and format == :feed %>
+<% span = "span6" %>
+<% else %>
+<% span = "span8" %>
+<% end %>
 	<div class='row'>
-		<div class='span7'>
+		<div class='<%= span %>'>
 			<h4 class='title'><%= article.title %></h4>
 		</div>
 	</div>
 	<div class='row'>
-		<div class='span7'>
+		<div class='<%= span %>'>
 			<span class='content'>
 				<%= sanitize article.content, tags: %w(iframe img a b ul ol li), attributes: %w(width height src frameborder allowfullscreen href target) %>
 			</span>

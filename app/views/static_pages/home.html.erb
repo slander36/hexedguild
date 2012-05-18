@@ -11,12 +11,12 @@
 			</section>
 			<% end %>
 		</aside>
-		<div class='span7 offset1'>
+		<div class='span6 offset1'>
 			<ol class='articles'>
-				<%= render @announcement %>
+				<%= render @announcement, format: :feed %>
 			</ol>
 			<ol class='articles'>
-				<%= render @articles %>
+				<%= render @articles, format: :feed %>
 			</ol>
 		</div>
 	</div>

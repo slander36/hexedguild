@@ -2,11 +2,11 @@
 	<div class='span8 offset2'>
 		<% if @announcement %>
 		<ol class='articles'>
-			<%= render @announcement %>
+			<%= render @announcement, format: :full %>
 		</ol>
 		<% end %>
 		<ol class='articles'>
-			<%= render @articles %>
+			<%= render @articles, format: :full %>
 		</ol>
 		<%= will_paginate @articles %>
 	</div>

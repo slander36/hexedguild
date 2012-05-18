@@ -39,7 +39,7 @@ textarea {
 
 .page {
 	position: relative;
-	padding-top: 188px;
+	padding-top: 208px;
 	&.combined {
 		background-image: url('/assets/combined_background.jpg');
 	}
@@ -57,13 +57,13 @@ textarea {
 	height: 1140px;
 }
 
-$containerWidth: 974px;
+$containerWidth: 954px;
 
 .container {
 	position: relative;
 	width: $containerWidth;
 	margin: 0 auto;
-	padding: 10px;
+	padding: 0;
 	color: $warningBackground;
 }
 
@@ -73,12 +73,19 @@ h1, h2, h3, h4, h5, h6 {
 	line-height: 1;
 }
 
+h1, h2 {
+	color: $grayLight;
+}
+
+h3, h4 {
+	color: $gray;
+}
+
 h1 {
 	font-size: 3em;
 	letter-spacing: -2px;
 	margin-bottom: 30px;
 	text-align: center;
-	color: $grayLight;
 }
 
 h2 {
@@ -87,7 +94,6 @@ h2 {
 	margin-bottom: 30px;
 	text-aling: center;
 	font-weight: normal;
-	color: $grayLight;
 }
 
 p {
@@ -214,6 +220,17 @@ input, textarea, select, .uneditable-input {
 	}
 }
 
+/* Toons */
+
+.toons {
+	ul {
+		list-style: none;
+		li {
+			padding: 10px 0;
+		}
+	}
+}
+
 /* Articles */
 
 .articles {
@@ -237,6 +254,13 @@ input, textarea, select, .uneditable-input {
 
 .content {
 	display: block;
+	a {
+		text-decoration: none;
+		&:visited {
+			opacity: 1.0 !important;
+		}
+		opacity: 1.0 !important;
+	}
 }
 .timestamp {
 	color: $grayLight;
