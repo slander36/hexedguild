@@ -88,8 +88,8 @@ class UsersController < ApplicationController
 				end
 			end
 		else
-			flash[:error] = "Invalid attempt at access. Your account will now be deleted."
-			current_user.destroy
+			flash[:error] = "Invalid attempt at access. Your account will be reported."
+			# add a report function at some point
 			redirect_to root_path
 		end
 	end

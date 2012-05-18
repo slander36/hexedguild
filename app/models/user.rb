@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
 	has_many :wow_toons, dependent: :destroy
 	has_many :tera_toons, dependent: :destroy
-	has_many :articles
+	has_many :articles, dependent: :destroy
 
 	before_save { |user| user.email = email.downcase }
 	before_save :create_remember_token
