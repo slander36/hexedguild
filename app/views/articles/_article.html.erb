@@ -17,7 +17,7 @@
 		<div class='row'>
 			<div class='<%= span %>'>
 				<span class='content'>
-					<%= sanitize article.content, tags: %w(iframe img a b ul ol li), attributes: %w(width height src frameborder allowfullscreen href target) %>
+					<%= sanitize article.content, tags: %w(br iframe img a b ul ol li), attributes: %w(width height src frameborder allowfullscreen href target) %>
 				</span>
 				<span class='timestamp'>
 					Posted <%= time_ago_in_words(article.created_at) %> ago.
