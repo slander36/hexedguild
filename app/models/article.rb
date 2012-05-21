@@ -4,13 +4,14 @@
 #
 #  id           :integer         not null, primary key
 #  title        :string(255)
-#  content      :string(255)
+#  content      :text
 #  wow          :boolean
 #  tera         :boolean
 #  announcement :boolean
 #  user_id      :integer
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
+#  members_only :boolean
 #
 
 class Article < ActiveRecord::Base
